@@ -8,21 +8,21 @@ import SimpleStocks.Exceptions.StockTypeNotFoundException;
 public class Stock implements IStock {
     private String StockSymbol;
     private StockType StockType;
-    private int VariableDividend;
+    private int LastDividend;
     private double FixedDividend; //// TODO: 03/11/2016 would a fixed dividend ever change?
     private final int ParValue;
 
-    public Stock(String stockSymbol, StockType stockType, int variableDividend, int parValue) throws StockTypeNotFoundException
+    public Stock(String stockSymbol, StockType stockType, int lastDividend, int parValue) throws StockTypeNotFoundException
     {
-        this(stockSymbol, stockType, variableDividend, parValue, 0.0);
+        this(stockSymbol, stockType, lastDividend, parValue, 0.0);
     }
 
-    public Stock(String stockSymbol, StockType stockType, int variableDividend, int parValue, double fixedDividend) throws StockTypeNotFoundException
+    public Stock(String stockSymbol, StockType stockType, int lastDividend, int parValue, double fixedDividend) throws StockTypeNotFoundException
     {
         StockSymbol = stockSymbol;
         StockType = CheckValidStockType(stockType);
         StockType = stockType;
-        VariableDividend = variableDividend;
+        LastDividend = lastDividend;
         FixedDividend = fixedDividend;
         ParValue = parValue;
     }
@@ -36,11 +36,11 @@ public class Stock implements IStock {
     }
 
     public int GetVariableDividend() {
-        return VariableDividend;
+        return LastDividend;
     }
 
     public void SetVariableDividend(int variableDividend) {
-        VariableDividend = variableDividend;
+        LastDividend = variableDividend;
     }
 
     public double GetFixedDividend() {
@@ -57,13 +57,12 @@ public class Stock implements IStock {
 
     public int GetDividendForCommonStockType()
     {
-        return VariableDividend; //assuming that the dividends will be paid at the same rate
+        return LastDividend;
     }
 
     public double GetDividendForPreferredStockType()
     {
-        //assuming that the dividend of the preferred stock includes a fixed percentage of the PAR value
-        return VariableDividend + (FixedDividend* ParValue);
+        return FixedDividend * ParValue;
     }
 
     private StockType CheckValidStockType(StockType stockType) throws StockTypeNotFoundException

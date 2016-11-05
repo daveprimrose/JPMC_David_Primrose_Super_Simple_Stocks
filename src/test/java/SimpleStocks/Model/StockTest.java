@@ -76,7 +76,7 @@ public class StockTest {
         double actual = teaStock.CalculateDividendYield(1);
         assertEquals(expected, actual, 0.01);
 
-        expected = 10.0;
+        expected = 2.0;
         actual = ginStock.CalculateDividendYield(1);
         Assert.assertEquals(expected, actual, 0.01);
     }
